@@ -1,13 +1,13 @@
 import React from 'react';
 import { LineCanvas } from '@nivo/line';
 
-const periodYears = 30
+const periodYears = 35
 const monthlySalary = 1800
-const monthlySavingsPercentage = 0.1
-const annualReturn = 0.03
+const monthlySavingsPercentage = 0.2
+const annualReturn = 0.05
 const currentYear = new Date().getFullYear()
 
-const buildSalaryDatapoints = () => {
+const buildSalary = () => {
   const o = {
     id: 'salary',
     data: []
@@ -20,7 +20,7 @@ const buildSalaryDatapoints = () => {
   }
   return o
 }
-const buildSavingsDatapoints = () => {
+const buildSavings = () => {
   const o = {
     id: 'savings',
     data: []
@@ -34,10 +34,25 @@ const buildSavingsDatapoints = () => {
   return o
 }
 
+const buildCompoundSavings = () => {
+  const o = {
+    id: 'compound',
+    data: []
+  }
+  for (let years = 1; years <= periodYears; years++) {
+    o.data.push({
+      x: currentYear + years,
+      y: ((1 + annualReturn)**years) * monthlySalary * 12 * monthlySavingsPercentage * years
+    })
+  }
+  return o
+}
+
 
 const data = [
-  buildSalaryDatapoints(),
-  buildSavingsDatapoints()
+  buildSalary(),
+  buildSavings(),
+  buildCompoundSavings()
 ];
 
 export const HomePage = () => {
@@ -82,7 +97,28 @@ export const HomePage = () => {
                       pointSize={8}
                       pointColor={{theme: 'background'}}
                       pointBorderWidth={2}
-                      pointBorderColor={{theme: 'background'}} />
+                      pointBorderColor={{theme: 'background'}}
+                      axisTop={null}
+                      axisRight={null}
+                      axisBottom={{
+                        orient: 'bottom',
+                        tickSize: 5,
+                        tickPadding: 5,
+                        tickRotation: -45,
+                        legend: 'Year',
+                        legendOffset: 50,
+                        legendPosition: 'middle'
+                      }}
+                      axisLeft={{
+                        orient: 'left',
+                        tickSize: 5,
+                        tickPadding: 5,
+                        tickRotation: 0,
+                        legend: 'Money',
+                        legendOffset: -50,
+                        legendPosition: 'middle'
+                      }}
+                      />
 
           <p className="text-muted">Reaching your million via untaxed savings</p>
         </div>
