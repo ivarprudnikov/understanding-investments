@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 const SavingsGraph = ({ data }) => {
   return (<LineCanvas
     data={data}
-    height={400}
+    height={600}
     width={600}
     margin={{ top: 5, right: 5, bottom: 120, left: 80 }}
     axisTop={null}
