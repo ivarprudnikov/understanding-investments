@@ -1,6 +1,6 @@
 import React from 'react'
 import img from './img/illustration-7.png'
-import { MillionaireSection } from './MillionaireSecion'
+import { MillionaireSection } from './MillionaireSection'
 
 export const HomePage = () => {
   return (<>
