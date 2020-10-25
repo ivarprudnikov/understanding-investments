@@ -1,21 +1,15 @@
 language: node_js
-# if using Ubuntu 16 need this library
-# https://github.com/cypress-io/cypress-documentation/pull/1647
 addons:
   apt:
     packages:
-      - libgconf-2-4
+    - libgconf-2-4
 install:
-  - npm ci
+- npm ci
 script:
-  - npm test && npm run build
-  # serve built files in /dist for cypress
-  - npm run start:dist &
-  # run cypress tests
-  - npm run cy:run
-  # after all tests finish running we need
-  # to kill all background jobs (like "npm start &")
-  - kill $(jobs -p) || true
+- npm test && npm run build
+- npm run start:dist &
+- npm run cy:run
+- kill $(jobs -p) || true
 deploy:
   provider: pages
   skip-cleanup: true
@@ -28,4 +22,5 @@ deploy:
     branch: master
 env:
   global:
-    - CYPRESS_CRASH_REPORTS=0
+  - CYPRESS_CRASH_REPORTS=0
+  - secure: eDni5MRlu6znFvKBXjDkLxnpU8EfZ/kSn5akmYXc20PPdOjbdp6yYwx7RqTSaQIonkCOPiABEjEegfMfMARGKVxdyOMFRw0MjKJqIV5cms7444509kVvgbQCcWN+uF42/OWQL+xQA3gxL+tO+/aXMpHbWt9rushMDxv2auIcPJTwcRyu+Dw8j6uHqdXqgOY62DJ63IN8b9H/xhvIBT7Idh03YdZ4rXmvFAzYwzTghGUy8Rjtcz+LyKSJlcZevihMC0y9nVu3aZsRfw294HxnjcOgFd6vd40kgy7K5sAJncuaHWLRSfarFZp2eUWy7xFHAk49J7ovGpG6orpEUgMTao5izM5IBciJ4sIne+BGGSSgYQLpKH2+VrGR71mkENWKaAb3B/sRliknCxi5YsU6YGZ9JyPM5jwtUDySMFjF2m1XRp9hZDaKOgn6nu1nxqGL/P7v1S34qDx0ng01I5XFYnLokUFkCaWGMrXSsnC1uj2oNAu0SB0P/no1zRVnsbkQ2qxFP8WjUOoiq1LuOHAOckMpY/akjrVyTf9JmgcMmJwtdjG8h6dBuq97xpwsGoobFAjc3DK3f6tnraLUSxv3/kkMPscevkna1lWXdy7Xqx5l17orA9+Gh0y9U3mNRtT9TQVL7lkifF/BzXHiz0sntYhvRbzG8Vkl92yZrlapiPQ=
