@@ -17,6 +17,7 @@
   },
   "scripts": {
     "start": "parcel src/index.html",
+    "start:dist": "http-server dist --port ${PORT:-8080}",
     "build": "parcel build src/index.html",
     "test": "eslint src",
     "cy:run": "cypress run"
@@ -27,6 +28,7 @@
     "eslint-plugin-jsx-a11y": "^6.3.1",
     "eslint-plugin-react": "^7.21.5",
     "eslint-plugin-react-hooks": "^4.2.0",
+    "http-server": "^0.12.3",
     "parcel-bundler": "^1.12.4",
     "sass": "^1.27.0"
   },
