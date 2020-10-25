@@ -133,7 +133,7 @@ export const MillionaireSection = () => {
 
           <div className='form-group'>
             <label htmlFor='monthlySavings'>What part of the income will you put aside?</label>
-            <select id='monthlySavings' style={{ width: 200 }} aria-describedby='monthlySavingsHelp' className='form-control' value={monthlySavings} onBlur={event => setMonthlySavings(event.target.value)}>
+            <select id='monthlySavings' style={{ width: 200 }} aria-describedby='monthlySavingsHelp' className='form-control' value={monthlySavings+''} onChange={event => setMonthlySavings(parseFloat(event.target.value))} onBlur={event => setMonthlySavings(parseFloat(event.target.value))}>
               <option value='0.1'>One tenth (10%)</option>
               <option value='0.2'>One fifth (20%)</option>
               <option value='0.25'>Quarter (25%)</option>
@@ -147,7 +147,7 @@ export const MillionaireSection = () => {
 
           <div className='form-group'>
             <label htmlFor='annualReturn'>Average rate of annual return on investment</label>
-            <select id='annualReturn' style={{ width: 200 }} aria-describedby='annualReturnHelp' className='form-control' value={annualReturn} onBlur={event => setAnnualReturn(parseFloat(event.target.value))}>
+            <select id='annualReturn' style={{ width: 200 }} aria-describedby='annualReturnHelp' className='form-control' value={annualReturn+''} onChange={event => setAnnualReturn(parseFloat(event.target.value))} onBlur={event => setAnnualReturn(parseFloat(event.target.value))}>
               <option value='0.005'>Conservative (0.5%)</option>
               <option value='0.01'>Conservative (1%)</option>
               <option value='0.03'>OK (3%)</option>
