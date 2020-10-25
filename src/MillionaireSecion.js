@@ -139,7 +139,7 @@ export const MillionaireSection = () => {
               <option value='0.25'>Quarter (25%)</option>
               <option value='0.33'>One third (33%)</option>
               <option value='0.5'>Half (50%)</option>
-              <option value='1.0'>All income (100%)</option>
+              <option value='1'>All income (100%)</option>
             </select>
             <small id='monthlySavingsHelp' className='form-text text-muted'>
               How much will you save? The idea is &quot;to pay yourself first&quot; when you get your monthly income. It is assumed that after you save that amount you&apos;ll not touch it. Various sources suggest different amounts but most importantly you have to start saving!
