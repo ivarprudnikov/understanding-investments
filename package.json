@@ -18,7 +18,7 @@
   "scripts": {
     "start": "parcel src/index.html",
     "start:dist": "http-server dist --port ${PORT:-8080}",
-    "build": "parcel build src/index.html",
+    "build": "parcel build src/index.html --public-url ./",
     "test": "eslint src",
     "cy:run": "cypress run"
   },
