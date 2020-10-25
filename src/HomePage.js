@@ -12,7 +12,7 @@ export const HomePage = () => {
           </div>
           <div className='col-12 col-md-6 order-md-1'>
 
-            <h1 className='display-4'>
+            <h1 className='display-4 page-title'>
               Understanding <br />
               <span className='text-primary small'>investments &amp; savings</span>.
             </h1>
