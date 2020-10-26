@@ -1,6 +1,7 @@
 import React from 'react'
 import img from './img/illustration-7.png'
 import { MillionaireSection } from './MillionaireSection'
+import { HousingSection } from './HousingSection';
 
 export const HomePage = () => {
   return (<>
@@ -29,6 +30,8 @@ export const HomePage = () => {
     </section>
 
     <MillionaireSection />
+
+    <HousingSection />
 
   </>)
 }
