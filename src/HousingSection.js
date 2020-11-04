@@ -67,6 +67,44 @@ export const HousingSection = () => {
 
   const currentYear = new Date().getFullYear()
 
+  const buildMortgagePoints = useCallback(() => {
+    const o = {
+      id: 'Annual mortgage',
+      data: []
+    }
+    for (let i = 1; i <= mortgageTerm; i++) {
+      o.data.push({
+        x: currentYear + i,
+        y: monthlyMortgage * 12 * i * -1
+      })
+    }
+    return o
+  }, [currentYear, mortgageTerm, monthlyMortgage])
+
+  const buildPrincipalPoints = useCallback(() => {
+    const o = {
+      id: 'Principal',
+      data: []
+    }
+    for (let i = 1; i <= mortgageTerm; i++) {
+      // Loan outstanding after period = P * [(1 + r)n – (1 + r)m] / [(1 + r)n – 1]
+      const P = mortgage;
+      const r = interest;
+      const n = mortgageTerm;
+      let paidPrincipal = 0;
+      for (let j = 1; j <= i; j++) {
+        const loanRemainderAtTheStart = P * (Math.pow(1 + r, n) - Math.pow(1 + r, j - 1)) / (Math.pow(1 + r, n) - 1);
+        const loanRemainderAtTheEnd = P * (Math.pow(1 + r, n) - Math.pow(1 + r, j)) / (Math.pow(1 + r, n) - 1);
+        paidPrincipal += (loanRemainderAtTheStart - loanRemainderAtTheEnd);
+      }
+      o.data.push({
+        x: currentYear + i,
+        y: Math.round(paidPrincipal)
+      })
+    }
+    return o
+  }, [currentYear, mortgageTerm, monthlyMortgage])
+
   const buildRentPoints = useCallback(() => {
     const o = {
       id: 'Annual rent',
@@ -89,7 +127,7 @@ export const HousingSection = () => {
     for (let years = 1; years <= mortgageTerm; years++) {
       o.data.push({
         x: currentYear + years,
-        y: Math.pow((1 + annualReturn), years) * (monthlyInvestment * 12 * (years - 1) + deposit) + monthlyInvestment * 12
+        y: Math.round(Math.pow((1 + annualReturn), years) * (monthlyInvestment * 12 * (years - 1) + deposit) + monthlyInvestment * 12)
       })
     }
     return o
@@ -116,6 +154,8 @@ export const HousingSection = () => {
 
   useEffect(() => {
     setChartData([
+      buildMortgagePoints(),
+      buildPrincipalPoints(),
       buildRentPoints(),
       buildInvestmentPoints()
     ])
@@ -129,12 +169,12 @@ export const HousingSection = () => {
         <form>
           <div className='form-group'>
             <label htmlFor='periodYears'>Mortgage term (years)</label>
-            <input type='number' placeholder='e.g. 35' className='form-control' id='periodYears' style={{ width: 100 }} value={mortgageTerm} onChange={event => setMortgageTerm(event.target.value)} />
+            <input type='number' placeholder='e.g. 35' className='form-control' id='periodYears' style={{ width: 100 }} value={mortgageTerm} onChange={event => setMortgageTerm(parseFloat(event.target.value))} />
           </div>
 
           <div className='form-group'>
             <label htmlFor='mortgage'>Mortgage</label>
-            <input type='number' placeholder='e.g. 280000' className='form-control' id='mortgage' aria-describedby='mortgageHelp' style={{ width: 150 }} value={mortgage} onChange={event => setMortgage(event.target.value)} />
+            <input type='number' placeholder='e.g. 280000' className='form-control' id='mortgage' aria-describedby='mortgageHelp' style={{ width: 150 }} value={mortgage} onChange={event => setMortgage(parseFloat(event.target.value))} />
             <small id='mortgageHelp' className='form-text text-muted'>
               The amount you need to borrow in addition to your deposit to buy the property.
             </small>
@@ -142,7 +182,7 @@ export const HousingSection = () => {
 
           <div className='form-group'>
             <label htmlFor='interest'>Annual interest on mortgage</label>
-            <input type='number' placeholder='e.g. 3.35' className='form-control' id='interest' aria-describedby='interestHelp' style={{ width: 150 }} value={interest} onChange={event => setInterest(event.target.value)} />
+            <input type='number' placeholder='e.g. 3.35' className='form-control' id='interest' aria-describedby='interestHelp' style={{ width: 150 }} value={interest} onChange={event => setInterest(parseFloat(event.target.value))} />
             <small id='interestHelp' className='form-text text-muted'>
               You can try the interest rate or the APR here. Calculation will assume it as being fixed throughout the period of the mortgage. Variable interest rate would produce different results but it is difficult to forecast it.
             </small>
@@ -150,7 +190,7 @@ export const HousingSection = () => {
 
           <div className='form-group'>
             <label htmlFor='deposit'>Savings/down payment/deposit</label>
-            <input type='number' placeholder='e.g. 65000' className='form-control' id='deposit' aria-describedby='depositHelp' style={{ width: 150 }} value={deposit} onChange={event => setDeposit(event.target.value)} />
+            <input type='number' placeholder='e.g. 65000' className='form-control' id='deposit' aria-describedby='depositHelp' style={{ width: 150 }} value={deposit} onChange={event => setDeposit(parseFloat(event.target.value))} />
             <small id='depositHelp' className='form-text text-muted'>
               How much do you have saved already towards the purchase? You would invest it if not buying a house.
             </small>
@@ -168,7 +208,7 @@ export const HousingSection = () => {
 
           <div className='form-group'>
             <label htmlFor='monthlyRent'>Monthly rent</label>
-            <input type='number' placeholder='e.g. 1800' className='form-control' id='monthlyRent' aria-describedby='monthlyRentHelp' style={{ width: 150 }} value={monthlyRent} onChange={event => setMonthlyRent(event.target.value)} />
+            <input type='number' placeholder='e.g. 1800' className='form-control' id='monthlyRent' aria-describedby='monthlyRentHelp' style={{ width: 150 }} value={monthlyRent} onChange={event => setMonthlyRent(parseFloat(event.target.value))} />
             <small id='monthlyRentHelp' className='form-text text-muted'>
               A rent you'd pay if not buying the property with mortgage and savings
             </small>
