@@ -103,7 +103,7 @@ export const HousingSection = () => {
       })
     }
     return o
-  }, [currentYear, mortgageTerm, monthlyMortgage])
+  }, [currentYear, mortgageTerm, interest, mortgage])
 
   const buildRentPoints = useCallback(() => {
     const o = {
@@ -159,7 +159,7 @@ export const HousingSection = () => {
       buildRentPoints(),
       buildInvestmentPoints()
     ])
-  }, [buildRentPoints, buildInvestmentPoints])
+  }, [buildMortgagePoints, buildPrincipalPoints, buildRentPoints, buildInvestmentPoints])
 
   return (<section className='container py-3'>
     <h2 className='font-weight-lighter'>Mortgage vs rent</h2>
@@ -210,7 +210,7 @@ export const HousingSection = () => {
             <label htmlFor='monthlyRent'>Monthly rent</label>
             <input type='number' placeholder='e.g. 1800' className='form-control' id='monthlyRent' aria-describedby='monthlyRentHelp' style={{ width: 150 }} value={monthlyRent} onChange={event => setMonthlyRent(parseFloat(event.target.value))} />
             <small id='monthlyRentHelp' className='form-text text-muted'>
-              A rent you'd pay if not buying the property with mortgage and savings
+              A rent you&apos;d pay if not buying the property with mortgage and savings
             </small>
           </div>
 
@@ -218,7 +218,7 @@ export const HousingSection = () => {
             <label htmlFor='monthlyInvestment'>Investable monthly difference</label>
             <input type='number' className='form-control' id='monthlyInvestment' aria-describedby='monthlyInvestmentHelp' style={{ width: 150 }} value={monthlyInvestment} disabled={true} />
             <small id='monthlyInvestmentHelp' className='form-text text-muted'>
-              The difference between mortgage payment and rent you'd invest
+              The difference between mortgage payment and rent you&apos;d invest
             </small>
           </div>
 
